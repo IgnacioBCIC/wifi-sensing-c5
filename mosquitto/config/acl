@@ -1,0 +1,38 @@
+user server
+topic readwrite wifi-sensing/v1/#
+
+# RX01
+
+user rx01
+
+topic read wifi-sensing/v1/control/#
+topic read wifi-sensing/v1/devices/rx01/cmd/#
+
+topic write wifi-sensing/v1/devices/rx01/status
+topic write wifi-sensing/v1/devices/rx01/info
+topic write wifi-sensing/v1/devices/rx01/event
+topic write wifi-sensing/v1/devices/rx01/data/#
+
+# RX02
+
+user rx02
+
+topic read wifi-sensing/v1/control/#
+topic read wifi-sensing/v1/devices/rx02/cmd/#
+
+topic write wifi-sensing/v1/devices/rx02/status
+topic write wifi-sensing/v1/devices/rx02/info
+topic write wifi-sensing/v1/devices/rx02/event
+topic write wifi-sensing/v1/devices/rx02/data/#
+
+# RX03
+
+user rx03
+
+topic read wifi-sensing/v1/control/#
+topic read wifi-sensing/v1/devices/rx03/cmd/#
+
+topic write wifi-sensing/v1/devices/rx03/status
+topic write wifi-sensing/v1/devices/rx03/info
+topic write wifi-sensing/v1/devices/rx03/event
+topic write wifi-sensing/v1/devices/rx03/data/#

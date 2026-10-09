@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "sensing": {
+    "band": "2.4g",
+    "phy": "802.11n",
+    "bandwidth_mhz": 20,
+    "expected_channel": 0
+  },
+  "probe": {
+    "rate_hz": 200
+  },
+  "capture": {
+    "blocks": 4,
+    "target_packets": 400,
+    "nominal_duration_ms": 2000,
+    "max_capture_ms": 2600,
+    "settle_time_ms": 1000
+  },
+  "upload": {
+    "frames_per_chunk": 50,
+    "qos": 1
+  },
+  "timeouts": {
+    "mqtt_connect_s": 10,
+    "ready_s": 40,
+    "armed_s": 15
+  },
+  "healthcheck": {
+    "enabled": true,
+    "search_target_packets": 100,
+    "rate_hz": 200,
+    "search_settle_time_ms": 500,
+    "max_capture_ms": 900,
+    "result_timeout_s": 4,
+    "good_unique_ratio": 0.95,
+    "required_consecutive_passes": 1,
+    "max_soft_reinits_per_boot": 1,
+    "max_full_restarts": 1,
+    "reinit_ack_timeout_s": 3,
+    "reinit_pause_ms": 100,
+    "between_checks_ms": 100,
+    "min_frames": 50,
+    "frozen_max_unique_vectors": 2,
+    "suspicious_unique_ratio": 0.1
+  },
+  "block_quality": {
+    "max_attempts": 2,
+    "decision_timeout_s": 5,
+    "retry_settle_time_ms": 300
+  },
+  "recovery": {
+    "association_timeout_s": 25,
+    "ready_retry_timeout_s": 8,
+    "restart_enabled": true,
+    "restart_command_retries": 3,
+    "restart_ack_timeout_s": 5,
+    "restart_online_timeout_s": 25,
+    "restart_ready_timeout_s": 20,
+    "info_timeout_s": 25
+  }
+}

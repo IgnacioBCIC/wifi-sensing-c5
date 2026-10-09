@@ -1,0 +1,73 @@
+menu "WiFi Sensing Receiver"
+
+    config WS_DEVICE_ID
+        string "Device ID"
+        default "rx01"
+
+    config WS_WIFI_SSID_24
+        string "SSID WiFi 2.4 GHz"
+        default "WiFiSensing"
+
+    config WS_WIFI_PASS_24
+        string "Password WiFi 2.4 GHz"
+        default "WifiSensing123"
+
+    config WS_WIFI_SSID_5
+        string "SSID WiFi 5 GHz"
+        default "WiFiSensing"
+
+    config WS_WIFI_PASS_5
+        string "Password WiFi 5 GHz"
+        default "WifiSensing123"
+
+    config WS_MQTT_URI
+        string "MQTT Broker URI"
+        default "mqtt://10.42.0.1:1883"
+
+    config WS_MQTT_USER
+        string "MQTT username"
+        default "rx01"
+
+    config WS_MQTT_PASSWORD
+        string "MQTT password"
+        default "pass123"
+
+    config WS_MQTT_BASE_TOPIC
+        string "MQTT base topic"
+        default "wifi-sensing/v1"
+
+    config WS_OTA_PORT
+        int "OTA HTTP server port"
+        default 8000
+
+
+    config WS_CSI_UDP_PORT
+        int "UDP CSI data port"
+        range 1024 65535
+        default 5007
+
+    config WS_CSI_PROMISCUOUS
+        bool "Enable promiscuous mode for CSI (experimental)"
+        default n
+
+    config WS_RECOVERY_UDP_PORT
+        int "UDP recovery port"
+        range 1024 65535
+        default 5006
+
+    config WS_HEARTBEAT_INTERVAL_MS
+        int "MQTT heartbeat interval (ms)"
+        range 1000 60000
+        default 10000
+
+    config WS_MQTT_FORCE_RECONNECT_MS
+        int "Force MQTT reconnect after offline time (ms)"
+        range 5000 120000
+        default 15000
+
+    config WS_MQTT_WATCHDOG_RESTART_MS
+        int "Restart ESP if WiFi is up but MQTT remains offline (ms)"
+        range 15000 300000
+        default 45000
+
+endmenu

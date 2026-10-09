@@ -1,0 +1,42 @@
+name: wifi-sensing
+
+services:
+  mosquitto:
+    image: eclipse-mosquitto:2.1.2-alpine
+
+    container_name: wifi-sensing-mosquitto
+
+    restart: unless-stopped
+
+    ports:
+      - "${MQTT_PORT:-1883}:1883"
+
+    volumes:
+      - ./mosquitto/config:/mosquitto/config:ro
+      - mosquitto_data:/mosquitto/data
+
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  ota-server:
+    image: nginx:alpine
+    container_name: wifi-sensing-ota
+    restart: unless-stopped
+
+    ports:
+      - "${OTA_PORT:-8000}:80"
+
+    volumes:
+      - "${OTA_DIR:-./ota-server}:/usr/share/nginx/html:ro"
+
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  mosquitto_data:
