@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% block title %}Calibración · WiFi Sensing{% endblock %}
+{% block content %}
+<section class="hero">
+  <div>
+    <h1>Calibración</h1>
+    <p class="muted">Crea un baseline local de habitación vacía para ESPectre. Los pesos del modelo permanecen congelados.</p>
+  </div>
+</section>
+
+<div class="grid grid-2">
+  <section class="card">
+    <div class="card-body">
+      <div class="card-title">Nuevo baseline <span class="badge badge-info">EMPTY solamente</span></div>
+      <div class="alert alert-info">
+        Crea baseline para calibracion de un nuevo espacio (30 segundos aproximados) vacio.
+      </div>
+      <div class="spacer"></div>
+      <form id="calibration-form" class="grid">
+        <label class="form-control">
+          <span class="label">Nombre</span>
+          <input id="cal-name" class="input" maxlength="80" required placeholder="Identificador de baseline">
+        </label>
+        <label class="form-control">
+          <span class="label">Banda</span>
+          <select id="cal-band" class="select">
+            <option value="2.4g">2.4 GHz</option>
+            <option value="5g">5 GHz</option>
+          </select>
+        </label>
+        <label class="form-control">
+          <span class="label">Nota opcional</span>
+          <input id="cal-note" class="input" maxlength="300" placeholder="AP/RX en posiciones definitivas">
+        </label>
+        <button id="cal-start" class="btn btn-primary" type="submit">Crear baseline</button>
+      </form>
+      <div class="spacer"></div>
+      <p class="muted">El baseline creado queda guardado. Se selecciona al iniciar una captura desde el Dashboard.</p>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="card-body">
+      <div class="card-title">Trabajo actual <span id="cal-job-badge" class="badge">Sin trabajo</span></div>
+      <p id="cal-job-message" class="muted">No hay calibración activa.</p>
+      <div class="progress"><span id="cal-progress" style="width:0%"></span></div>
+      <div class="spacer"></div>
+      <div class="stat-grid">
+        <div class="stat"><div class="stat-label">Bloque</div><div id="cal-block" class="stat-value">—</div></div>
+        <div class="stat"><div class="stat-label">Estado</div><div id="cal-state" class="stat-value">—</div></div>
+      </div>
+      <div class="spacer"></div>
+      <div id="cal-guidance" class="alert alert-warning" style="display:none"></div>
+    </div>
+  </section>
+</div>
+
+<section class="section">
+  <h2 class="section-title">Baselines guardados</h2>
+  <div id="cal-profiles" class="grid grid-2"></div>
+</section>
+
+
+<section class="section">
+  <div class="grid grid-2">
+    <article class="card">
+      <div class="card-body">
+        <div class="card-title">AE híbrido <span class="badge badge-info">EMPTY automático</span></div>
+        <p class="muted">Captura bloques EMPTY con el modelo activo y recalibra automáticamente los thresholds Spectral y Delta. No modifica los pesos del AE.</p>
+        <div class="grid grid-2">
+          <label class="form-control">
+            <span class="label">Banda</span>
+            <select id="ae-cal-band" class="select"><option value="2.4g">2.4 GHz</option><option value="5g">5 GHz</option></select>
+          </label>
+          <label class="form-control">
+            <span class="label">Bloques EMPTY</span>
+            <select id="ae-cal-blocks" class="select"><option value="20">20 bloques (~40 s)</option><option value="30">30 bloques (~60 s)</option><option value="40">40 bloques (~80 s)</option></select>
+          </label>
+        </div>
+        <div class="spacer"></div>
+        <button id="ae-cal-start" class="btn btn-success">Calibrar AE híbrido</button>
+      </div>
+    </article>
+    <article class="card">
+      <div class="card-body">
+        <div class="card-title">Estado AE <span id="ae-model-badge" class="badge">Cargando…</span></div>
+        <div class="stat-grid">
+          <div class="stat"><div class="stat-label">Modelo</div><div id="ae-model-id" class="stat-value">—</div></div>
+          <div class="stat"><div class="stat-label">Última calibración</div><div id="ae-model-calibrated" class="stat-value">—</div></div>
+          <div class="stat"><div class="stat-label">Threshold Spectral</div><div id="ae-thr-spectral" class="stat-value">—</div></div>
+          <div class="stat"><div class="stat-label">Threshold Delta</div><div id="ae-thr-delta" class="stat-value">—</div></div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="section card">
+  <div class="card-body">
+    <div class="card-title">Validación del baseline</div>
+    <p class="muted">La validación no modifica el baseline. Recomendación: ejecuta <strong>Vacío → Presencia → Vacío</strong>. Cada prueba usa 6 bloques (~12 s).</p>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/calibration.js') }}"></script>
+{% endblock %}

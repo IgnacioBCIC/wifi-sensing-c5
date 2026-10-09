@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% block title %}Dashboard · WiFi Sensing{% endblock %}
+{% block content %}
+<section class="hero">
+  <div>
+    <h1>Consola experimental</h1>
+    <div class="muted">Estado de receptores, CSI health y ejecución remota desde el teléfono.</div>
+  </div>
+  <div class="kpi-row">
+    <span id="mqttBadge" class="badge">MQTT…</span>
+    <span id="modelCompatBadge" class="badge">Modelos…</span>
+  </div>
+</section>
+
+<section>
+  <h2 class="section-title">Receptores</h2>
+  <div id="devicesGrid" class="grid grid-3">
+    {% for device in ["rx01","rx02","rx03"] %}
+    <article class="card" id="card-{{ device }}">
+      <div class="card-body">
+        <div class="card-title">
+          <span>{{ device|upper }}</span>
+          <span class="badge" id="online-{{ device }}">Esperando</span>
+        </div>
+        <div class="stat-grid">
+          <div class="stat"><div class="stat-label">Batería</div><div class="stat-value" id="battery-{{ device }}">—</div></div>
+          <div class="stat"><div class="stat-label">RSSI</div><div class="stat-value" id="rssi-{{ device }}">—</div></div>
+          <div class="stat"><div class="stat-label">IP</div><div class="stat-value" id="ip-{{ device }}">—</div></div>
+          <div class="stat"><div class="stat-label">Canal</div><div class="stat-value" id="channel-{{ device }}">—</div></div>
+          <div class="stat"><div class="stat-label">Firmware / OTA</div><div class="stat-value" id="fw-{{ device }}">—</div></div>
+          <div class="stat"><div class="stat-label">CSI Health</div><div class="stat-value" id="health-{{ device }}">—</div></div>
+        </div>
+        <div class="spacer"></div>
+        <div class="code-note" id="meta-{{ device }}">MAC: —</div>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="section grid grid-2">
+  <article class="card">
+    <div class="card-body">
+      <div class="card-title"><span>CSI Health</span><span class="badge badge-info">100 CSI/RX</span></div>
+      <p class="muted">Ejecuta el healthcheck real y la recuperación configurada, sin capturar los bloques formales del experimento.</p>
+      <div class="form-control">
+        <label class="label" for="healthBand">Banda</label>
+        <select id="healthBand" class="select">
+          <option value="2.4g">2.4 GHz</option>
+          <option value="5g">5 GHz</option>
+        </select>
+      </div>
+      <div class="spacer"></div>
+      <button id="healthButton" class="btn btn-success">Ejecutar healthcheck</button>
+    </div>
+  </article>
+
+  <article class="card">
+    <div class="card-body">
+      <div class="card-title"><span>Experimento remoto</span><span class="badge badge-info">3 RX</span></div>
+      <div class="grid grid-2">
+        <div class="form-control">
+          <label class="label" for="experimentBand">Banda</label>
+          <select id="experimentBand" class="select">
+            <option value="2.4g">2.4 GHz</option>
+            <option value="5g">5 GHz</option>
+          </select>
+        </div>
+        <div class="form-control">
+          <label class="label" for="baselineSelect">Baseline</label>
+          <select id="baselineSelect" class="select">
+            <option value="published">Original ESPectre (publicado)</option>
+          </select>
+        </div>
+        <div class="form-control">
+          <label class="label" for="modelMode">Modelo</label>
+          <select id="modelMode" class="select">
+            <option value="zero_shot_a">ESPectre · Zero-shot</option>
+            <option value="ae_hybrid_v1">AE híbrido · Spectral + Delta</option>
+            <option value="none">Sin inferencia</option>
+          </select>
+        </div>
+        <div class="form-control">
+          <label class="label" for="countdown">Cuenta regresiva</label>
+          <select id="countdown" class="select">
+            <option value="5">5 segundos</option>
+            <option value="10">10 segundos</option>
+            <option value="0">Sin espera</option>
+          </select>
+        </div>
+      </div>
+      <div class="spacer"></div>
+   
+      <div class="spacer"></div>
+      <div class="grid grid-2">
+        <button id="experimentButton" class="btn btn-primary">Iniciar captura</button>
+        <button id="liveButton" class="btn btn-success">Captura en vivo</button>
+      </div>
+
+  </article>
+</section>
+
+<section class="section">
+  <article class="card">
+    <div class="card-body">
+      <div class="card-title">
+        <span>Trabajo actual</span>
+        <button id="cancelButton" class="btn btn-error" style="display:none">Cancelar</button>
+      </div>
+      <div id="jobEmpty" class="muted">No hay trabajo activo.</div>
+      <div id="jobPanel" style="display:none">
+        <div class="kpi-row">
+          <span id="jobState" class="badge"></span>
+          <span id="jobKind" class="badge"></span>
+          <span id="jobBand" class="badge"></span>
+          <span id="jobBaseline" class="badge"></span>
+        </div>
+        <p id="jobMessage"></p>
+        <div class="progress"><span id="jobProgress" style="width:0%"></span></div>
+        <div class="spacer"></div>
+        <div id="modelResults"></div>
+      </div>
+    </div>
+  </article>
+</section>
+
+
+{% endblock %}

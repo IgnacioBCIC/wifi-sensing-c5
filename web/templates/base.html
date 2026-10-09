@@ -1,0 +1,41 @@
+{# WIFI_SENSING_CALIBRATION_V1 #}
+<!doctype html>
+<html lang="es" data-theme="business">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1120">
+  <title>{% block title %}WiFi Sensing{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+</head>
+<body>
+  <header class="navbar">
+    <div class="nav-inner">
+      <a class="brand" href="/">
+        <span class="brand-dot"></span>
+        <span>WiFi Sensing</span>
+      </a>
+      <nav class="nav-links">
+        <a class="nav-link {{ 'active' if active == 'dashboard' else '' }}" href="/">Dashboard</a>
+        <a class="nav-link {{ 'active' if active == 'calibration' else '' }}" href="/calibration">Calibración</a>
+        <a class="nav-link {{ 'active' if active == 'config' else '' }}" href="/config">Configuración</a>
+        <a class="nav-link {{ 'active' if active == 'history' else '' }}" href="/history">Historial</a>
+      </nav>
+    </div>
+  </header>
+
+  <div id="toast" class="toast alert"></div>
+
+  <main class="shell">{% block content %}{% endblock %}</main>
+
+  <nav class="mobile-nav">
+    <a class="nav-link {{ 'active' if active == 'dashboard' else '' }}" href="/">Estado</a>
+    <a class="nav-link {{ 'active' if active == 'calibration' else '' }}" href="/calibration">Calib</a>
+    <a class="nav-link {{ 'active' if active == 'config' else '' }}" href="/config">Config</a>
+    <a class="nav-link {{ 'active' if active == 'history' else '' }}" href="/history">Historial</a>
+  </nav>
+
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

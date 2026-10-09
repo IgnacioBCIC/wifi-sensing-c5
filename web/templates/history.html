@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Historial · WiFi Sensing{% endblock %}
+{% block content %}
+<section class="hero">
+  <div>
+    <h1>Historial experimental</h1>
+    <div class="muted">Metadata, estado y referencias a logs de cada ejecución iniciada desde la web.</div>
+  </div>
+</section>
+
+<section class="card">
+  <div class="card-body">
+    {% if jobs %}
+    <div class="table-wrap">
+      <table class="table">
+        <thead><tr><th>Inicio</th><th>Tipo</th><th>Banda</th><th>Condición</th><th>Modelo</th><th>Estado</th><th>ID</th></tr></thead>
+        <tbody>
+        {% for job in jobs %}
+          <tr>
+            <td class="js-date" data-ts="{{ job.started_at }}">{{ job.started_at }}</td>
+            <td>{{ job.kind }}</td>
+            <td>{{ job.band }}</td>
+            <td>{{ job.condition or '—' }}</td>
+            <td>{{ job.model_mode or '—' }}</td>
+            <td><span class="badge">{{ job.state }}</span></td>
+            <td class="code-note">{{ job.id }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="muted">Todavía no hay ejecuciones desde la consola web.</div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}
+{% block scripts %}
+<script>
+document.querySelectorAll(".js-date").forEach(el => {
+  const ts = Number(el.dataset.ts) * 1000;
+  if (ts) el.textContent = new Date(ts).toLocaleString();
+});
+</script>
+{% endblock %}

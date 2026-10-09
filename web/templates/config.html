@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}Configuración · WiFi Sensing{% endblock %}
+{% block content %}
+<section class="hero">
+  <div>
+    <h1>experiment.json</h1>
+    <div class="muted">Se muestra completo, pero sólo se habilitan parámetros que tiene sentido modificar desde operación.</div>
+  </div>
+  <span id="configCompat" class="badge {{ 'badge-success' if config.derived.espectre_zero_shot_a_compatible else 'badge-warning' }}">
+    Zero-shot A {{ 'compatible' if config.derived.espectre_zero_shot_a_compatible else 'no compatible' }}
+  </span>
+</section>
+
+<div class="grid grid-2">
+  <section class="card">
+    <div class="card-body">
+      <div class="card-title">Parámetros editables</div>
+      <form id="configForm">
+        <div class="grid grid-2">
+        {% for key, spec in config.fields.items() %}
+          {% set value = config.values[key] %}
+          {% if spec.type == "bool" %}
+          <label class="toggle-row">
+            <span>
+              <strong>{{ spec.label }}</strong>
+              <div class="muted" style="font-size:12px">{{ spec.help }}</div>
+            </span>
+            <input class="toggle config-field" type="checkbox" data-key="{{ key }}" {% if value %}checked{% endif %}>
+          </label>
+          {% else %}
+          <div class="form-control">
+            <label class="label">{{ spec.label }}</label>
+            <input
+              class="input config-field"
+              data-key="{{ key }}"
+              data-type="{{ spec.type }}"
+              type="number"
+              value="{{ value }}"
+              {% if spec.min is defined %}min="{{ spec.min }}"{% endif %}
+              {% if spec.max is defined %}max="{{ spec.max }}"{% endif %}
+              step="{{ spec.step if spec.step is defined else (0.01 if spec.type == 'float' else 1) }}"
+            >
+            <div class="muted" style="font-size:12px">{{ spec.help }}</div>
+          </div>
+          {% endif %}
+        {% endfor %}
+        </div>
+        <hr>
+        <div class="alert alert-info">
+          Duración nominal calculada: <strong id="nominalMs">{{ config.derived.nominal_duration_ms }} ms</strong>.
+          Al guardar se recalcula automáticamente; no se edita manualmente.
+        </div>
+        <div class="spacer"></div>
+        <button class="btn btn-primary" type="submit">Guardar configuración</button>
+      </form>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="card-body">
+      <div class="card-title">JSON completo · sólo lectura</div>
+      <div class="muted">Incluye también timeouts, upload y parámetros internos que no exponemos para edición casual.</div>
+      <div class="spacer"></div>
+      <pre id="rawConfig">{{ config.raw | tojson(indent=2) }}</pre>
+    </div>
+  </section>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener("DOMContentLoaded", () => WifiApp.bindConfigPage());
+</script>
+{% endblock %}
