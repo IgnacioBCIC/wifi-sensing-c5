@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "calibrated_at": "2026-10-09T05:42:23.812436+00:00",
+  "model_id": "ae_24g_hybrid_v1",
+  "empty_logs": [
+    "/home/ubuntu/wifi-sensing/test-logs/web/ae_calibration_20261009_024011_84ccc0_receiver.txt"
+  ],
+  "empty_blocks": 41,
+  "statistic": "max",
+  "spectral": {
+    "stats": {
+      "n": 41,
+      "min": 66.45469665527344,
+      "mean": 67.10604746748761,
+      "p95": 67.5442886352539,
+      "p99": 67.56182556152343,
+      "max": 67.57121276855469
+    },
+    "margin": 1.2,
+    "old_threshold": 63.79931488037109,
+    "new_threshold": 81.08545532226562
+  },
+  "delta": {
+    "stats": {
+      "n": 41,
+      "min": 1.016626000404358,
+      "mean": 1.115004812798849,
+      "p95": 1.1187111139297485,
+      "p99": 2.3751834869384796,
+      "max": 3.18847393989563
+    },
+    "margin": 1.1,
+    "old_threshold": 1.2130872249603273,
+    "new_threshold": 3.507321333885193
+  },
+  "note": "Calibraci\u00f3n EMPTY operativa. No sustituye validaci\u00f3n final con m\u00faltiples sesiones EMPTY/STATIC/MOVEMENT independientes."
+}

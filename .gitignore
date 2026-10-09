@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Virtual environment
+.venv/
+venv/
+
+# ESP-IDF
+**/build/
+**/managed_components/
+
+# Runtime
+datasets/
+test-logs/
+calibrations/
+backups/
+ota-artifacts/
+
+# Web runtime
+web/data/*
+!web/data/.gitkeep
+
+# Secrets
+.env
+.env.*
+!.env.example
+mosquitto/config/passwd
+
+# Temporary files
+*.bak
+*.bak_*
+*.log
+*.tmp
+*.tar.gz
+*.zip
+
+# IDE
+.vscode/
+.idea/

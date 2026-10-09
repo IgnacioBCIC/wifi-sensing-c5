@@ -1,0 +1,101 @@
+{
+  "schema_version": 2,
+  "created_at": "2026-10-08T23:02:12.558492+00:00",
+  "model_id": "ae_24g_hybrid_v1",
+  "band": "2.4g",
+  "model_type": "hybrid_dual_branch_v1",
+  "source_feature_contract": "amplitude_3rx_52sc_200hz_ds10_40x156",
+  "device_order": [
+    "rx01",
+    "rx02",
+    "rx03"
+  ],
+  "input_features": 156,
+  "training_condition": "empty_only",
+  "decision_rule": "spectral_present OR delta_present",
+  "branches": {
+    "spectral": {
+      "preprocessing": "relative_per_row_rx_zscore_v1",
+      "base_threshold": 0.7538574832677841,
+      "threshold_multiplier": 12.0,
+      "effective_threshold": 81.08545532226562,
+      "purpose": "presencia est\u00e1tica / cambio fuerte de forma espectral"
+    },
+    "delta": {
+      "preprocessing": "relative_then_first_difference_v1",
+      "base_threshold": 0.7538833457231522,
+      "threshold_multiplier": 1.25,
+      "effective_threshold": 3.507321333885193,
+      "purpose": "presencia con movimiento / din\u00e1mica temporal"
+    }
+  },
+  "threshold_rationale": {
+    "status": "empty_live_calibrated",
+    "statistic": "max",
+    "spectral_margin": 1.2,
+    "delta_margin": 1.1,
+    "empty_blocks": 41,
+    "empty_logs": [
+      "/home/ubuntu/wifi-sensing/test-logs/web/ae_calibration_20261009_024011_84ccc0_receiver.txt"
+    ],
+    "note": "Thresholds recalibrados con logs EMPTY live. Repetir al cambiar entorno f\u00edsico/banda/configuraci\u00f3n relevante."
+  },
+  "train_sessions": [
+    "empty_24g_clean_01"
+  ],
+  "validation_sessions": [
+    "empty_24g_clean_02"
+  ],
+  "test_empty_sessions": [
+    "empty_24g_clean_03"
+  ],
+  "presence_evaluation_sessions": [],
+  "train_blocks": 90,
+  "validation_blocks": 90,
+  "evaluation": {
+    "tp": 0,
+    "tn": 90,
+    "fp": 0,
+    "fn": 0,
+    "sensitivity": 0.0,
+    "specificity": 1.0,
+    "balanced_accuracy": 0.5
+  },
+  "calibration": {
+    "schema_version": 1,
+    "calibrated_at": "2026-10-09T05:42:23.812436+00:00",
+    "model_id": "ae_24g_hybrid_v1",
+    "empty_logs": [
+      "/home/ubuntu/wifi-sensing/test-logs/web/ae_calibration_20261009_024011_84ccc0_receiver.txt"
+    ],
+    "empty_blocks": 41,
+    "statistic": "max",
+    "spectral": {
+      "stats": {
+        "n": 41,
+        "min": 66.45469665527344,
+        "mean": 67.10604746748761,
+        "p95": 67.5442886352539,
+        "p99": 67.56182556152343,
+        "max": 67.57121276855469
+      },
+      "margin": 1.2,
+      "old_threshold": 63.79931488037109,
+      "new_threshold": 81.08545532226562
+    },
+    "delta": {
+      "stats": {
+        "n": 41,
+        "min": 1.016626000404358,
+        "mean": 1.115004812798849,
+        "p95": 1.1187111139297485,
+        "p99": 2.3751834869384796,
+        "max": 3.18847393989563
+      },
+      "margin": 1.1,
+      "old_threshold": 1.2130872249603273,
+      "new_threshold": 3.507321333885193
+    },
+    "note": "Calibraci\u00f3n EMPTY operativa. No sustituye validaci\u00f3n final con m\u00faltiples sesiones EMPTY/STATIC/MOVEMENT independientes."
+  }
+}
